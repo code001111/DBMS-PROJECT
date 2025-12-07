@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - TechStore</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🛒 TechStore</div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/shop" class="nav-link">Shop</a>
+                <a href="/cart" class="nav-link">Cart</a>
+                <a href="/orders" class="nav-link active">Orders</a>
+            </div>
+            <div class="cart-icon">
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>My Orders</h1>
+        
+        <div class="orders-container">
+            <div class="search-orders">
+                <input type="text" id="customer-id-input" placeholder="Enter your Customer ID to view orders">
+                <button class="btn btn-primary" onclick="searchOrders()">Search</button>
+            </div>
+            
+            <div id="orders-list" class="orders-list">
+                <!-- Orders will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 TechStore. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        async function searchOrders() {
+            const customerId = document.getElementById('customer-id-input').value;
+            
+            if (!customerId) {
+                alert('Please enter a Customer ID');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/orders/${customerId}`);
+                const orders = await response.json();
+                
+                const ordersList = document.getElementById('orders-list');
+                
+                if (orders.length === 0) {
+                    ordersList.innerHTML = '<p>No orders found for this customer.</p>';
+                    return;
+                }
+                
+                let html = '';
+                for (let order of orders) {
+                    html += `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <h3>Order #${order.order_id}</h3>
+                                <span class="order-status ${order.status}">${order.status.toUpperCase()}</span>
+                            </div>
+                            <div class="order-details">
+                                <p><strong>Date:</strong> ${new Date(order.order_date).toLocaleDateString()}</p>
+                                <p><strong>Total Amount:</strong> ₹${order.total_amount.toFixed(2)}</p>
+                            </div>
+                            <div class="order-actions">
+                                <button class="btn btn-secondary" onclick="viewOrderItems(${order.order_id})">View Items</button>
+                                <a href="/bill/${order.order_id}" class="btn btn-secondary">View Bill</a>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                ordersList.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                alert('Error loading orders. Please check the Customer ID and try again.');
+            }
+        }
+
+        async function viewOrderItems(orderId) {
+            try {
+                const response = await fetch(`/api/orders/${orderId}/items`);
+                const items = await response.json();
+                
+                let itemsText = 'Order Items:\n\n';
+                items.forEach(item => {
+                    itemsText += `${item.product_name}\n`;
+                    itemsText += `  Quantity: ${item.quantity}\n`;
+                    itemsText += `  Unit Price: ₹${item.unit_price.toFixed(2)}\n`;
+                    itemsText += `  Subtotal: ₹${item.subtotal.toFixed(2)}\n\n`;
+                });
+                
+                alert(itemsText);
+                
+            } catch (error) {
+                console.error('Error loading items:', error);
+                alert('Error loading order items.');
+            }
+        }
+    </script>
+</body>
+</html>

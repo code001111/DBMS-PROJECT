@@ -1,0 +1,201 @@
+# 🛒 TechStore - Quick Start Guide
+
+## What's Been Created
+
+A complete online shopping store website with the following features:
+
+### 📦 Core Features
+1. **Product Catalog** - Browse all available tech products
+2. **Shopping Cart** - Add/remove products, manage quantities
+3. **Checkout** - Customer registration and order placement
+4. **Bill Generation** - View and print order invoices
+5. **Order History** - Track your orders with Customer ID
+
+### 💾 Database Schema (One-to-Many Relationships)
+
+```
+Customers (1) ──→ (Many) Orders
+   ↓
+Orders (1) ──→ (Many) Order_Items
+   ↓
+Products (1) ←── (Many) Order_Items
+```
+
+### 📁 Project Structure
+```
+shopping_store/
+├── app.py                      # Flask backend API
+├── database.py                 # Database setup
+├── requirements.txt            # Dependencies
+├── README.md                   # Full documentation
+├── QUICKSTART.txt             # This file
+├── shopping_store.db          # SQLite database
+├── templates/
+│   ├── index.html             # Home page
+│   ├── shop.html              # Product listing
+│   ├── cart.html              # Shopping cart
+│   ├── checkout.html          # Checkout form
+│   ├── orders.html            # Order history
+│   └── bill.html              # Invoice page
+└── static/
+    ├── style.css              # Styling
+    └── script.js              # Frontend logic
+```
+
+## 🚀 How to Run
+
+### Option 1: From Terminal
+```bash
+cd c:\Users\astha\OneDrive\Documents\DBMS\shopping_store
+python app.py
+```
+
+### Option 2: From VS Code
+1. Open the folder in VS Code
+2. Open terminal (Ctrl + `)
+3. Run: `python app.py`
+
+### Access the Website
+- **Home Page**: http://localhost:5000
+- **Shop**: http://localhost:5000/shop
+- **Cart**: http://localhost:5000/cart
+- **Orders**: http://localhost:5000/orders
+
+## 📝 How to Use
+
+### Step 1: Browse Products
+1. Click "Shop" in navigation
+2. View all products with prices and stock
+
+### Step 2: Add to Cart
+1. Select quantity for desired product
+2. Click "Add to Cart"
+3. Cart count updates in navbar
+
+### Step 3: Review Cart
+1. Go to "Cart" page
+2. See all items with prices
+3. Update quantities or remove items
+4. View total with shipping cost
+
+### Step 4: Checkout & Place Order
+1. Click "Proceed to Checkout"
+2. Fill customer details:
+   - Full Name
+   - Email
+   - Phone
+   - Address
+   - City
+3. Review order summary
+4. Click "Place Order"
+
+### Step 5: Get Bill
+1. After order placed, auto-redirected to bill page
+2. See complete invoice with:
+   - Order ID
+   - Customer details
+   - Itemized list
+   - Total amount
+3. Click "Print Bill" to generate PDF
+
+### Step 6: View Your Orders
+1. Go to "Orders" page
+2. Enter your Customer ID (shown on bill)
+3. See all your orders
+4. Click "View Bill" to see any invoice
+
+## 🗄️ Sample Products
+
+Pre-loaded with 8 products:
+- Laptop (₹999.99)
+- Mouse (₹29.99)
+- Keyboard (₹149.99)
+- Monitor (₹399.99)
+- Headphones (₹199.99)
+- USB-C Cable (₹19.99)
+- Webcam (₹89.99)
+- Phone Stand (₹24.99)
+
+## 💡 Key Features
+
+✅ **Local Storage Cart** - Items saved in browser
+✅ **Automatic Stock Update** - Stock decreases when order placed
+✅ **Smart Shipping** - Free shipping on orders > ₹5000
+✅ **Unique Emails** - Prevents duplicate customer emails
+✅ **Printable Bills** - Professional invoice format
+✅ **Responsive Design** - Works on mobile and desktop
+
+## 📊 Database Features
+
+### One-to-Many Relationships
+- **Customers → Orders**: One customer can place many orders
+- **Orders → Order_Items**: One order can have many items
+
+### Data Integrity
+- Foreign key constraints
+- Automatic timestamp creation
+- Transaction management
+
+## 🔌 API Endpoints
+
+### Products
+- `GET /api/products` - Get all products
+- `POST /api/products` - Add new product
+
+### Customers  
+- `GET /api/customers` - Get all customers
+- `POST /api/customers` - Create customer
+
+### Orders
+- `POST /api/orders` - Create new order
+- `GET /api/orders/<customer_id>` - Get customer orders
+- `GET /api/orders/<order_id>/items` - Get order items
+- `GET /api/orders/<order_id>/bill` - Get bill
+
+## ⚠️ Important Notes
+
+1. **Cart Storage**: Uses browser localStorage (clears with browser data)
+2. **Database**: SQLite (shopping_store.db) created automatically
+3. **Port**: Default is 5000 (change in app.py if needed)
+4. **Debug Mode**: Development only (disable for production)
+
+## 📱 Testing Scenario
+
+1. Go to Shop → Add Laptop (Qty: 2) to cart
+2. Add Mouse (Qty: 1) to cart
+3. Go to Cart → See total
+4. Checkout → Enter details
+5. Get redirected to Bill
+6. View Customer ID on bill
+7. Go to Orders → Search with Customer ID
+8. See your order and print bill
+
+## 🐛 Troubleshooting
+
+### Flask not found
+```bash
+pip install Flask
+```
+
+### Port already in use
+Edit `app.py` line `app.run(debug=True, port=5000)` to a different port
+
+### Database errors
+Delete `shopping_store.db` and run:
+```bash
+python database.py
+```
+
+## 📚 Learning Concepts
+
+This project demonstrates:
+- Flask web framework
+- SQLite database
+- One-to-many relationships
+- REST API design
+- HTML/CSS/JavaScript frontend
+- Local storage
+- Form handling
+- Database transactions
+
+Enjoy your TechStore! 🎉

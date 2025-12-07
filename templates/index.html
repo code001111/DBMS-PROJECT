@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Online Shopping</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🛒 TechStore</div>
+            <div class="nav-links">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/shop" class="nav-link">Shop</a>
+                <a href="/cart" class="nav-link">Cart</a>
+                <a href="/orders" class="nav-link">Orders</a>
+            </div>
+            <div class="cart-icon">
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to TechStore</h1>
+            <p>Your one-stop shop for premium tech products</p>
+            <a href="/shop" class="btn btn-primary">Start Shopping</a>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature">
+            <div class="feature-icon">📦</div>
+            <h3>Fast Delivery</h3>
+            <p>Get your products delivered quickly</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">💳</div>
+            <h3>Easy Payment</h3>
+            <p>Multiple payment options available</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure Shopping</h3>
+            <p>Your data is safe with us</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🎁</div>
+            <h3>Great Deals</h3>
+            <p>Best prices on quality products</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 TechStore. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
